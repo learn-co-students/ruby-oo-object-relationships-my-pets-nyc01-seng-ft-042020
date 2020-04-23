@@ -41,15 +41,13 @@ class Owner
   end
 
   def cats
-    Cat.all.select do |kitty| 
-      kitty.owner == self
-    end
+    Cat.all.select {|kitty| kitty.owner == self}
+
   end
 
   def dogs
-    Dog.all.select do |pup| 
-      pup.owner == self
-    end
+    Dog.all.select {|pup| pup.owner == self}
+
   end
 
   def walk_dogs
