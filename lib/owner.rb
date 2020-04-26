@@ -2,81 +2,70 @@ require 'pry'
 class Owner
   # code goes here
 
-  @@all = []
-
   attr_reader :name, :species
 
-  def initialize(name)
+  @@all = []
+
+  def initialize(name, species="human")
     @name = name
-    @species = "human"
+    @species = species
     @@all << self
-    end
+  end
 
-    def say_species
-      return "I am a #{@species}."
-    end
+  def say_species
+    "I am a #{species}."
+  end
 
-    def self.all
-      @@all
-    end
-    
-    def self.count
-      self.all.count
-    end
+  def self.all
+    @@all
+  end
 
-    def self.reset_all
-      self.all.clear
-    end
+  def self.count
+    @@all.count
+  end
 
-    def cats
-      Cat.all.select do |cat|
-        cat.owner == self
-      end
-    end
+  def self.reset_all
+    @@all.clear
+  end
 
-    def dogs
-      Dog.all.select do |dog|
-        dog.owner == self
-      end
-    end
-    
-    def buy_cat(cat_name)
-      Cat.new(cat_name, self)
-    end
+  def cats
+    Cat.all.select {|cats| cats.owner == self}
+  end
 
-    def buy_dog(dog_name)
-      Dog.new(dog_name, self)
-    end
-    
-    def walk_dogs
-      Dog.all.select do |dog|
-        dog.mood = "happy"
-      end
-    end
-
-    def feed_cats
-      Cat.all.select do |cat|
-        cat.mood = "happy"
-      end
-    end
-      
-    def sell_pets
-      self.dogs.each do |dog|
-        dog.mood = "nervous"
-        dog.owner = nil
-      end
-      self.cats.each do |cat|
-        cat.mood = "nervous"
-        cat.owner = nil
-      end
-    end
-
-    def list_pets
-      "I have #{self.dogs.count} dog(s), and #{self.cats.count} cat(s)."
-    end
+  def dogs
+    Dog.all.select {|dogs| dogs.owner == self}
+  end
 
 
+  def buy_cat(name)
+    Cat.new(name,self)
+  end
 
+  def buy_dog(name)
+    Dog.new(name,self)
+  end
+
+  def walk_dogs
+    dogs.each {|dog| dog.mood = "happy"}
+  end
+
+  def feed_cats
+    cats.each {|cat| cat.mood = "happy"}
+  end
+
+  def sell_pets
+    pets = dogs + cats
+
+    pets.each do |pet|
+      pet.mood = "nervous"
+      pet.owner = nil
+    end
+
+  end
+
+  def list_pets
+    "I have #{dogs.count} dog(s), and #{cats.count} cat(s)."
+  end
 
 
 end
