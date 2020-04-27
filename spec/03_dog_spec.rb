@@ -1,3 +1,4 @@
+require "pry"
 require_relative 'spec_helper.rb'
 
 describe Dog do
@@ -42,6 +43,7 @@ describe Dog do
     it "knows all the dogs" do
       Dog.all.include?(@dog)
     end
+
   end
 
 end
